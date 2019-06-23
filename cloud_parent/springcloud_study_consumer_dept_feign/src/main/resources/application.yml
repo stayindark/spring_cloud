@@ -1,0 +1,11 @@
+server:
+  port: 80
+eureka:
+  client:
+    service-url:
+      defaultZone: localhost:7001/eureka,http://localhost:7002/eureka,http://localhost:7003/eureka
+    register-with-eureka: false
+
+feign:
+  hystrix:
+    enable: ture;
