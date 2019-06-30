@@ -6,8 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 @Mapper
-public interface DeptDao {
-
+public interface ProviderDao {
     /**
      * 插入
      * @param deptEntity
@@ -28,4 +27,5 @@ public interface DeptDao {
      * @return
      */
     List<DeptEntity> findAll();
+
 }

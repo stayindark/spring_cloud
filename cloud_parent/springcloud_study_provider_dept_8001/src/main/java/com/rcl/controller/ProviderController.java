@@ -1,12 +1,9 @@
 package com.rcl.controller;
 
-import com.rcl.dao.DeptDao;
+import com.rcl.dao.ProviderDao;
 import com.rcl.entities.DeptEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,28 +11,37 @@ import java.util.List;
 public class ProviderController {
 
     @Autowired
-    private DiscoveryClient discoveryClient;
+    private ProviderDao providerDao;
 
-    @Autowired
-    private DeptDao deptDao;
+    @GetMapping("/provider/dept/test")
+    public String test() {
+        return "8001---->success";
+    }
 
-    @GetMapping("/dept/discovery")
-    public Object discovery(){
-        List<String> list = discoveryClient.getServices();
-        List<ServiceInstance> instances = discoveryClient.getInstances("STUDY-SPRINGCLOUD-DEPT");
-
-        for (ServiceInstance element :instances){
-            System.out.println(element.getServiceId());
-            System.out.println(element.getHost());
-            System.out.println(element.getPort());
-            System.out.println(element.getUri());
+    @GetMapping("/provider/dept/{deptNo}")
+    public DeptEntity findById(@PathVariable Long deptNo) {
+        DeptEntity dept = providerDao.findById(deptNo);
+        if (dept == null) {
+            throw new RuntimeException("该deptNo没有对应的信息" + deptNo);
         }
-        return this.discoveryClient;
+        return dept;
     }
 
-    @GetMapping("/dept/getList")
-    public List<DeptEntity> getList(){
-        return deptDao.findAll();
+    @GetMapping("/provider/dept/all")
+    public List<DeptEntity> findAll() {
+        List<DeptEntity> deptEntityList = providerDao.findAll();
+        if (deptEntityList == null || deptEntityList.size() < 1) {
+            throw new RuntimeException("未查询到任何数据");
+        }
+        return deptEntityList;
     }
 
+    @PostMapping("/provider/dept/insert")
+    public String insert(@RequestBody DeptEntity deptEntity) {
+        boolean b = providerDao.addDept(deptEntity);
+        if (b == false) {
+            throw new RuntimeException("添加失败");
+        }
+        return "添加成功";
+    }
 }

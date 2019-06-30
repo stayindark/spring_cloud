@@ -1,7 +1,16 @@
+#配置服务器信息
 server:
   port: 80
+
+#客户端注册进eureka服务列表
 eureka:
+  port: 7001 #服务注册中心端口
+  instance:
+    hostname: localhost #服务注册中心ip
+    instance-id: localhost:80 #指定本服务在eureka中的服务名
   client:
     service-url:
-      defaultZone: localhost:7001/eureka
-    register-with-eureka: false
+      defaultZone: http://${eureka.instance.hostname}:${eureka.port}/eureka
+spring:
+  application:
+    name: springcloud-study-consumer-80

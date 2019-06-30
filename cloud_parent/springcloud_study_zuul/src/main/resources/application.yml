@@ -1,0 +1,20 @@
+server:
+  port: 9527
+spring:
+  application:
+    name: springcloud-study-zuul
+
+eureka:
+  instance:
+    instance-id: localhost:9527
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://loaclhost:7001/eureka
+zuul:
+  routes:
+    mydept.serviceId: springcloud-study-consumer-80
+    mydept.path: /first/*
+  #多个用"*" ignored-services: "*"
+  #ignored-services: spring-cloud-consumer-feign
+  #prefix: /springcloud

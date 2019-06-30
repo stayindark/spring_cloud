@@ -1,2 +1,15 @@
+#配置服务器信息
 server:
-  port: 9001
+  port: 80
+#客户端注册进eureka服务列表
+eureka:
+  port: 7001  #服务注册中心端口
+  instance:
+    hostname: localhost  #服务注册中心ip
+    instance-id: study-springcloud-dept-consumer-hystrix  #指定本服务在eureka中的服务名
+  client:
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${eureka.port}/eureka
+spring:
+  application:
+    name: study-springcloud-dept-consumer-hystrix

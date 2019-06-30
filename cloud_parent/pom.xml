@@ -18,6 +18,7 @@
         <module>springcloud_study_eureka_7003</module>
         <module>springcloud_study_consumer_dept_feign</module>
         <module>springcloud_study_consumer_hystrix_dashboard</module>
+        <module>springcloud_study_zuul</module>
     </modules>
     <packaging>pom</packaging>
 
